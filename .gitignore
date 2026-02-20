@@ -1,0 +1,51 @@
+# CMake
+build/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+
+# Build artifacts
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+
+# Qt generated files
+moc_*.cpp
+*.moc.cpp
+qrc_*.cpp
+ui_*.h
+*_autogen/
+peninsula_client_autogen/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.user
+*.VC.db
+*.VC.db-shm
+*.VC.db-wal
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Dependencies
+/install/
+/dependencies/
+
+# Temporary files
+*.tmp
+*.bak
+*.log

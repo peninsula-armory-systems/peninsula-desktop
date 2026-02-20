@@ -1,4 +1,6 @@
+# peninsula-client
 
+Client in C++ for [peninsula-server](https://github.com/Nivmizz7/peninsula-server)
 
 ## License
 
