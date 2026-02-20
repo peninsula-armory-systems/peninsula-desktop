@@ -147,7 +147,7 @@ void MainWindow::onLoginClicked() {
     const auto password = _passwordInput->text();
 
     if (apiUrl.isEmpty() || username.isEmpty() || password.isEmpty()) {
-        setError("API URL, username et password requis.");
+        setError("API URL, username and password are required.");
         return;
     }
 
@@ -191,27 +191,27 @@ void MainWindow::onLoginFinished() {
         auto doc = QJsonDocument::fromJson(body, &error);
         if (error.error == QJsonParseError::NoError && doc.isObject()) {
             const auto msg = doc.object().value("error").toString();
-            setError(msg.isEmpty() ? "Login échoué" : msg);
+            setError(msg.isEmpty() ? "Login failed" : msg);
         } else {
-            setError("Login échoué");
+            setError("Login failed");
         }
         return;
     }
 
     const auto doc = QJsonDocument::fromJson(body);
     if (!doc.isObject()) {
-        setError("Réponse invalide.");
+        setError("Invalid response.");
         return;
     }
 
     const auto token = doc.object().value("accessToken").toString();
     if (token.isEmpty()) {
-        setError("Token manquant.");
+        setError("Missing token.");
         return;
     }
 
     _accessToken = token;
-    _loginInfo->setText("Connecté");
+    _loginInfo->setText("Connected");
     _passwordInput->clear();
     _usernameInput->clear();
 
@@ -235,9 +235,9 @@ void MainWindow::onUsersFinished() {
         auto doc = QJsonDocument::fromJson(body, &error);
         if (error.error == QJsonParseError::NoError && doc.isObject()) {
             const auto msg = doc.object().value("error").toString();
-            _usersError->setText(msg.isEmpty() ? "Erreur API" : msg);
+            _usersError->setText(msg.isEmpty() ? "API error" : msg);
         } else {
-            _usersError->setText("Erreur API");
+            _usersError->setText("API error");
         }
         return;
     }
@@ -245,7 +245,7 @@ void MainWindow::onUsersFinished() {
     QJsonParseError error;
     auto doc = QJsonDocument::fromJson(body, &error);
     if (error.error != QJsonParseError::NoError || !doc.isObject()) {
-        _usersError->setText("Réponse invalide");
+        _usersError->setText("Invalid response");
         return;
     }
 

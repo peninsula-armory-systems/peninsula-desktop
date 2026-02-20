@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(peninsula_client LANGUAGES CXX)
+project(peninsula_client VERSION 1.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

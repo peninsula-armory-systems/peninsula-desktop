@@ -1,6 +1,6 @@
 # peninsula-client
 
-Client in C++ for [peninsula-server](https://github.com/Nivmizz7/peninsula-server)
+Desktop client in C++ / Qt6 for [peninsula-server](https://github.com/peninsula-armory-systems/peninsula-server).
 
 ## License
 
