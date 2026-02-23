@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QTableWidget>
 #include <QSettings>
+#include <QComboBox>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -21,14 +22,14 @@ private slots:
     void onLoginClicked();
     void onLogoutClicked();
     void onLoginFinished();
-    void onUsersFinished();
+    void onProductsFinished();
     void onSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
 
 private:
     void buildUi();
     void showLogin();
-    void showUsers();
-    void loadUsers();
+    void showInventory();
+    void loadProducts();
     QUrl makeApiUrl(const QString &path) const;
     void setError(const QString &message);
 
@@ -46,13 +47,17 @@ private:
     QLabel *_loginError = nullptr;
     QPushButton *_loginButton = nullptr;
 
-    // Users UI
-    QWidget *_usersPage = nullptr;
+    // Inventory UI
+    QWidget *_inventoryPage = nullptr;
     QLabel *_loginInfo = nullptr;
     QPushButton *_logoutButton = nullptr;
-    QTableWidget *_usersTable = nullptr;
-    QLabel *_usersError = nullptr;
+    QPushButton *_refreshButton = nullptr;
+    QLineEdit *_searchInput = nullptr;
+    QComboBox *_conditionFilter = nullptr;
+    QTableWidget *_productsTable = nullptr;
+    QLabel *_inventoryError = nullptr;
+    QLabel *_inventoryStatus = nullptr;
 
     QNetworkReply *_loginReply = nullptr;
-    QNetworkReply *_usersReply = nullptr;
+    QNetworkReply *_productsReply = nullptr;
 };
