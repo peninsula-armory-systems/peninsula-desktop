@@ -217,6 +217,7 @@ void MainWindow::onLoginClicked() {
     payload["password"] = password;
 
     const auto url = makeApiUrl("v1/auth/login");
+    qDebug() << "Login URL:" << url.toString();
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
@@ -234,10 +235,17 @@ void MainWindow::onLoginFinished() {
     const auto reply = _loginReply;
     _loginReply = nullptr;
 
+    const auto networkError = reply->error();
     const auto status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     const auto body = reply->readAll();
 
     reply->deleteLater();
+
+    // Network-level error (connection refused, timeout, DNS failure...)
+    if (networkError != QNetworkReply::NoError && status == 0) {
+        setError("Connexion impossible : " + reply->errorString());
+        return;
+    }
 
     if (status < 200 || status >= 300) {
         QJsonParseError error;
@@ -346,8 +354,13 @@ void MainWindow::onProductsFinished() {
         const auto name = obj.value("name").toString();
         const auto brand = obj.value("brand").toString();
         const auto condition = obj.value("condition").toString();
-        const auto price = obj.value("price").toString();
-        const auto stockTotal = obj.value("stock_total").toInt(0);
+        // price peut être string ou number selon l'API
+        const auto priceVal = obj.value("price");
+        const auto price = priceVal.isString() ? priceVal.toString() : QString::number(priceVal.toDouble(), 'f', 2);
+
+        // total_stock peut être string ou int (PostgreSQL SUM → bigint → string)
+        const auto stockVal = obj.value("total_stock");
+        const int stockTotal = stockVal.isString() ? stockVal.toString().toInt() : stockVal.toInt(0);
         const auto categoryName = obj.value("category_name").toString("-");
 
         // Condition display
